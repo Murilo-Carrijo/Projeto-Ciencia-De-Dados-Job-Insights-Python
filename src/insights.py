@@ -49,9 +49,9 @@ def get_unique_industries(path):
 # teste de execução da função get_unique_industries
 
 
-if __name__ == "__main__":
-    industry = get_unique_industries("src/jobs.csv")
-    print(industry)
+# if __name__ == "__main__":
+#     industry = get_unique_industries("src/jobs.csv")
+#     print(industry)
 
 
 def filter_by_industry(jobs, industry):
@@ -73,21 +73,24 @@ def filter_by_industry(jobs, industry):
 
 
 def get_max_salary(path):
-    """Get the maximum salary of all jobs
+    data = read(path)
+    max_salary = 0
+    for line in data:
+        check_salary = line["max_salary"].isdigit()
+        if check_salary:
+            salary = int(line["max_salary"])
+        else:
+            salary = 0
+        if salary >= max_salary:
+            max_salary = salary
+    return max_salary
 
-    Must call `read`
+# teste de execução da função get_max_salary
 
-    Parameters
-    ----------
-    path : str
-        Must be passed to `read`
 
-    Returns
-    -------
-    int
-        The maximum salary paid out of all job opportunities
-    """
-    pass
+if __name__ == "__main__":
+    salary = get_max_salary("src/jobs.csv")
+    print(salary)
 
 
 def get_min_salary(path):
