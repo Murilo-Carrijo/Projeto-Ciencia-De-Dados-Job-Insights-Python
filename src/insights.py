@@ -94,21 +94,17 @@ if __name__ == "__main__":
 
 
 def get_min_salary(path):
-    """Get the minimum salary of all jobs
-
-    Must call `read`
-
-    Parameters
-    ----------
-    path : str
-        Must be passed to `read`
-
-    Returns
-    -------
-    int
-        The minimum salary paid out of all job opportunities
-    """
-    pass
+    data = read(path)
+    all_salary = []
+    for line in data:
+        check_salary = line["min_salary"].isdigit()
+        if check_salary:
+            all_salary.append(int(line["min_salary"]))
+    min_salary = all_salary[0]
+    for salary in all_salary:
+        if salary <= min_salary:
+            min_salary = salary
+    return min_salary
 
 
 def matches_salary_range(job, salary):
