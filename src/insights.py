@@ -1,22 +1,5 @@
 from src.jobs import read
 
-# j = [
-#         {"id": 1, "job_type": "PART_TIME"},
-#         {"id": 2, "job_type": "PART_TIME"},
-#         {"id": 3, "job_type": "OTHER"},
-#         {"id": 4, "job_type": "OTHER"},
-#         {"id": 5, "job_type": "FULL_TIME"},
-#         {"id": 6, "job_type": "FULL_TIME"},
-#         {"id": 7, "job_type": "CONTRACTOR"},
-#         {"id": 8, "job_type": "CONTRACTOR"},
-#         {"id": 9, "job_type": "TEMPORARY"},
-#         {"id": 10, "job_type": "TEMPORARY"},
-#         {"id": 11, "job_type": "INTERN"},
-#         {"id": 12, "job_type": "INTERN"},
-#     ]
-
-# jt = "PART_TIME"
-
 
 def get_unique_job_types(path):
     data = read(path)
@@ -27,13 +10,6 @@ def get_unique_job_types(path):
     job_type = set(list_of_unique_type)
     return job_type
 
-# teste de execução da função get_unique_job_types
-
-
-# if __name__ == "__main__":
-#     types = get_unique_job_types("src/jobs.csv")
-#     print(types)
-
 
 def filter_by_job_type(jobs, job_type):
     list_filter = []
@@ -41,13 +17,6 @@ def filter_by_job_type(jobs, job_type):
         if job["job_type"] == job_type:
             list_filter.append(job)
     return list_filter
-
-# teste de execução da função filter_by_job_type
-
-
-# if __name__ == "__main__":
-#     types = filter_by_job_type(j, jt)
-#     print(types)
 
 
 def get_unique_industries(path):
@@ -59,13 +28,6 @@ def get_unique_industries(path):
             list_of_unique_industry.append(industries)
     industry = set(list_of_unique_industry)
     return industry
-
-# teste de execução da função get_unique_industries
-
-
-# if __name__ == "__main__":
-#     industry = get_unique_industries("src/jobs.csv")
-#     print(industry)
 
 
 def filter_by_industry(jobs, industry):
@@ -88,6 +50,7 @@ def get_max_salary(path):
         if salary >= max_salary:
             max_salary = salary
     return max_salary
+
 
 # teste de execução da função get_max_salary
 
@@ -112,44 +75,29 @@ def get_min_salary(path):
 
 
 def matches_salary_range(job, salary):
-    """Checks if a given salary is in the salary range of a given job
-
-    Parameters
-    ----------
-    job : dict
-        The job with `min_salary` and `max_salary` keys
-    salary : int
-        The salary to check if matches with salary range of the job
-
-    Returns
-    -------
-    bool
-        True if the salary is in the salary range of the job, False otherwise
-
-    Raises
-    ------
-    ValueError
-        If `job["min_salary"]` or `job["max_salary"]` doesn't exists
-        If `job["min_salary"]` or `job["max_salary"]` aren't valid integers
-        If `job["min_salary"]` is greather than `job["max_salary"]`
-        If `salary` isn't a valid integer
-    """
-    pass
+    if "min_salary" not in job or "max_salary" not in job:
+        raise ValueError("Salário mínimo ou máximo pendente")
+    elif (
+        type(job["min_salary"]) != int
+        or type(job["max_salary"]) != int
+        or type(salary) != int
+    ):
+        raise ValueError("Os valores não são nº inteiros")
+    elif job["min_salary"] > job["max_salary"]:
+        raise ValueError("Salário mínimo maior que o salário máximo")
+    elif job["min_salary"] <= salary and job["max_salary"] >= salary:
+        return True
+    else:
+        return False
 
 
 def filter_by_salary_range(jobs, salary):
-    """Filters a list of jobs by salary range
+    result_filter = []
+    for job in jobs:
+        try:
+            if matches_salary_range(job, salary):
+                result_filter.append(job)
+        except ValueError:
+            pass
 
-    Parameters
-    ----------
-    jobs : list
-        The jobs to be filtered
-    salary : int
-        The salary to be used as filter
-
-    Returns
-    -------
-    list
-        Jobs whose salary range contains `salary`
-    """
-    return []
+    return result_filter
