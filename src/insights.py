@@ -1,5 +1,22 @@
 from src.jobs import read
 
+# j = [
+#         {"id": 1, "job_type": "PART_TIME"},
+#         {"id": 2, "job_type": "PART_TIME"},
+#         {"id": 3, "job_type": "OTHER"},
+#         {"id": 4, "job_type": "OTHER"},
+#         {"id": 5, "job_type": "FULL_TIME"},
+#         {"id": 6, "job_type": "FULL_TIME"},
+#         {"id": 7, "job_type": "CONTRACTOR"},
+#         {"id": 8, "job_type": "CONTRACTOR"},
+#         {"id": 9, "job_type": "TEMPORARY"},
+#         {"id": 10, "job_type": "TEMPORARY"},
+#         {"id": 11, "job_type": "INTERN"},
+#         {"id": 12, "job_type": "INTERN"},
+#     ]
+
+# jt = "PART_TIME"
+
 
 def get_unique_job_types(path):
     data = read(path)
@@ -19,21 +36,18 @@ def get_unique_job_types(path):
 
 
 def filter_by_job_type(jobs, job_type):
-    """Filters a list of jobs by job_type
+    list_filter = []
+    for job in jobs:
+        if job["job_type"] == job_type:
+            list_filter.append(job)
+    return list_filter
 
-    Parameters
-    ----------
-    jobs : list
-        List of jobs to be filtered
-    job_type : str
-        Job type for the list filter
+# teste de execução da função filter_by_job_type
 
-    Returns
-    -------
-    list
-        List of jobs with provided job_type
-    """
-    return []
+
+# if __name__ == "__main__":
+#     types = filter_by_job_type(j, jt)
+#     print(types)
 
 
 def get_unique_industries(path):
@@ -88,9 +102,9 @@ def get_max_salary(path):
 # teste de execução da função get_max_salary
 
 
-if __name__ == "__main__":
-    salary = get_max_salary("src/jobs.csv")
-    print(salary)
+# if __name__ == "__main__":
+#     salary = get_max_salary("src/jobs.csv")
+#     print(salary)
 
 
 def get_min_salary(path):
